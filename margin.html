@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Reg T Margin Calculator - Short Puts</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+    }
+    input[type="number"] {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+    }
+    #result {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Reg T Margin Calculator (Short Puts)</h2>
+
+  <label for="premium">Option Premium ($):</label>
+  <input type="number" id="premium" step="0.01">
+
+  <label for="stockPrice">Stock Price ($):</label>
+  <input type="number" id="stockPrice" step="0.01">
+
+  <label for="strikePrice">Strike Price ($):</label>
+  <input type="number" id="strikePrice" step="0.01">
+
+  <label for="contracts">Number of Contracts:</label>
+  <input type="number" id="contracts" min="1" value="1">
+
+  <button onclick="calculateMargin()">Calculate Margin</button>
+
+  <div id="result"></div>
+
+  <script>
+    function calculateMargin() {
+      const premium = parseFloat(document.getElementById('premium').value) || 0;
+      const stockPrice = parseFloat(document.getElementById('stockPrice').value) || 0;
+      const strikePrice = parseFloat(document.getElementById('strikePrice').value) || 0;
+      const contracts = parseInt(document.getElementById('contracts').value) || 1;
+
+      const otmAmount = Math.max(stockPrice - strikePrice, 0);
+      const part1 = 0.20 * stockPrice - otmAmount;
+      const part2 = 0.10 * strikePrice;
+      const maxComponent = Math.max(part1, part2);
+
+      const marginPerContract = premium + maxComponent;
+      const totalMargin = marginPerContract * contracts * 100;
+
+      document.getElementById('result').innerHTML = 
+        `Total Required Margin: $${totalMargin.toFixed(2)}<br>
+         (Per Share Margin: $${marginPerContract.toFixed(2)})`;
+    }
+  </script>
+
+</body>
+</html>
