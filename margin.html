@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Reg T Margin Calculator - Short Puts</title>
+  <title>Reg T Margin Calculator</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -34,7 +34,7 @@
 </head>
 <body>
 
-  <h2>Reg T Margin Calculator (Short Puts)</h2>
+  <h2>Reg T Margin Calculator</h2>
 
   <label for="premium">Option Premium ($):</label>
   <input type="number" id="premium" step="0.01">
@@ -67,9 +67,12 @@
       const marginPerContract = premium + maxComponent;
       const totalMargin = marginPerContract * contracts * 100;
 
+      const totalMinimumRequired = strikePrice * contracts * 100 + totalMargin;
+
       document.getElementById('result').innerHTML = 
         `Total Required Margin: $${totalMargin.toFixed(2)}<br>
-         (Per Share Margin: $${marginPerContract.toFixed(2)})`;
+         (Per Share Margin: $${marginPerContract.toFixed(2)})<br>
+         Total Minimum Amount Required: $${totalMinimumRequired.toFixed(2)}`;
     }
   </script>
 
